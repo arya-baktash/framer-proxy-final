@@ -1,6 +1,6 @@
 # File: /api/index.py
 from flask import Flask, jsonify, request
-import myfxbook # فقط خود ماژول را وارد می‌کنیم
+from myfxbook.myfxbook import Myfxbook  # اصلاح کلیدی در این خط است
 import os
 
 app = Flask(__name__)
@@ -15,8 +15,8 @@ def catch_all(path):
         return jsonify({"error": "Email or password not configured in Vercel environment variables."}), 500
     
     try:
-        # --- اصلاح کلیدی: استفاده از myfxbook.session به جای Myfxbook ---
-        with myfxbook.session(email, password) as client:
+        # --- اصلاح کلیدی: استفاده از Myfxbook با حرف M بزرگ ---
+        with Myfxbook(email, password) as client:
             accounts = client.get_my_accounts()
             
             if not accounts:
